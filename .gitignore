@@ -146,3 +146,8 @@ vite.config.ts.timestamp-*
 .DS_Store
 Thumbs.db
 .idea/
+
+.claude/
+.windsurf/
+.agents/
+skills-lock.json
