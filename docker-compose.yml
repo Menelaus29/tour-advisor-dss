@@ -1,0 +1,31 @@
+# Local PostgreSQL for development.
+#
+# Start:  docker compose up -d
+# Stop:   docker compose down        (keeps data)
+# Reset:  docker compose down -v     (deletes data)
+#
+# Connection string for backend/.env:
+#   postgresql://postgres:postgres@localhost:5432/tour_dss
+#
+# Port 5432 taken? Put DB_PORT=5433 in a .env file next to this one
+# (the repo root) and change the port in DATABASE_URL to match.
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tour_dss
+    ports:
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tour_dss"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
